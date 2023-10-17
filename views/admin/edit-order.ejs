@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90680653-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-90680653-2');
+    </script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter -->
+    <!-- <meta name="twitter:site" content="@bootstrapdash">
+    <meta name="twitter:creator" content="@bootstrapdash">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Azia">
+    <meta name="twitter:description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="twitter:image" content="https://www.bootstrapdash.com/azia/img/azia-social.png"> -->
+
+    <!-- Facebook -->
+    <!-- <meta property="og:url" content="https://www.bootstrapdash.com/azia">
+    <meta property="og:title" content="Azia">
+    <meta property="og:description" content="Responsive Bootstrap 4 Dashboard Template">
+
+    <meta property="og:image" content="https://www.bootstrapdash.com/azia/img/azia-social.png">
+    <meta property="og:image:secure_url" content="https://www.bootstrapdash.com/azia/img/azia-social.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600"> -->
+
+    <!-- Meta -->
+    <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="author" content="BootstrapDash">
+
+    <title>Talisman - Web Admin Panel</title>
+
+    <!-- vendor css -->
+    <link href="/lib/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="/lib/typicons.font/typicons.css" rel="stylesheet">
+
+    <!-- azia CSS -->
+    <link rel="stylesheet" href="/css/azia.css">
+
+</head>
+
+<body>
+
+    <div class="az-header">
+        <div class="container">
+            <div class="az-header-left">
+                <a href="/admin" class="az-logo"><span></span> Talisman</a>
+                <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
+            </div><!-- az-header-left -->
+            <div class="az-header-menu">
+                <div class="az-header-menu-header">
+                    <a href="/admin" class="az-logo"><span></span> azia</a>
+                    <a href="" class="close">&times;</a>
+                </div><!-- az-header-menu-header -->
+            </div><!-- az-header-menu -->
+            <div class="az-header-right">
+                <div class="dropdown az-profile-menu">
+                    <a href="" class="az-img-user"><img src="/img/faces/face1.jpg" alt=""></a>
+                    <div class="dropdown-menu">
+                        <div class="az-dropdown-header d-sm-none">
+                            <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                        </div>
+                        <div class="az-header-profile">
+                            <div class="az-img-user">
+                                <img src="/img/faces/face1.jpg" alt="">
+                            </div><!-- az-img-user -->
+                            <h6>Administrator</h6>
+                        </div><!-- az-header-profile -->
+
+                        <a href="/admin/logout" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign
+                            Out</a>
+                    </div><!-- dropdown-menu -->
+                </div>
+            </div><!-- az-header-right -->
+        </div><!-- container -->
+    </div><!-- az-header -->
+
+    <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+        <div class="container">
+            <div class="az-content-left az-content-left-components">
+                <div class="component-item">
+                    <label>Dashboard</label>
+                    <nav class="nav flex-column">
+                        <a href="/admin/" class="nav-link">Sessions</a>
+                        <a href="/admin/logs" class="nav-link">Logs</a>
+                    </nav>
+                    <label>Settings</label>
+                    <nav class="nav flex-column">
+                        <a href="/admin/orders" class="nav-link">Orders</a>
+                        <a href="/admin/create-order" class="nav-link">Create order</a>
+                    </nav>
+                </div><!-- component-item -->
+
+            </div><!-- az-content-left -->
+            <form action="/admin/edit-order" method="post" class="az-content-body pd-lg-l-40 d-flex flex-column">
+
+                <input type="hidden" name="orderId" value="<%= data._id %>">
+                <div class="az-content-label mg-b-5">Update order</div>
+                <p class="mg-b-20">Update order</p>
+
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Person name" type="text" name="person_name"
+                        style="margin-top: 1rem;" value="<%= data.person_name %>" required>
+                </div>
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Product name" type="text" name="product_name"
+                        style="margin-top: 1rem;" value="<%= data.product_name %>" required>
+                </div>
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Track number" type="text" name="track_number"
+                        style="margin-top: 1rem;" value="<%= data.track_number %>" required>
+                </div>
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Delivery address" type="text" name="delivery_address"
+                        style="margin-top: 1rem;" value="<%= data.delivery_address %>" required>
+                </div>
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Phone number" type="text" name="phone_number"
+                        style="margin-top: 1rem;" value="<%= data.phone_number %>" required>
+                </div>
+                <div class="col-lg">
+                    <input class="form-control" placeholder="Amount held" type="text" name="amount_held"
+                        style="margin-top: 1rem;" value="<%= data.amount_held %>" required>
+                </div>
+                <div class="col-sm-6 col-md-3"><button class="btn btn-primary btn-block" style="margin-top: 2rem;"
+                        type="submit">Update</button></div>
+                <div class="ht-40"></div>
+
+                <div class="az-footer mg-t-auto">
+                    <div class="container">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
+                            bootstrapdash.com
+                            2020</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+                                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap
+                                admin
+                                templates</a> from Bootstrapdash.com</span>
+                    </div><!-- container -->
+                </div><!-- az-footer -->
+            </form><!-- az-content-body -->
+        </div><!-- container -->
+    </div><!-- az-content -->
+
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/ionicons/ionicons.js"></script>
+    <script src="/js/jquery.cookie.js" type="text/javascript"></script>
+
+    <script src="/js/azia.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <script>
+
+        const socket = io();
+    </script>
+</body>
+
+</html>

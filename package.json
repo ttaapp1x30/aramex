@@ -1,0 +1,31 @@
+{
+  "name": "aramex",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "tailwind": "npx tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/output.css --watch"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-mongodb-session": "^3.1.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-session": "^1.17.3",
+    "express-useragent": "^1.0.15",
+    "geoip-lite": "^1.4.7",
+    "http-errors": "~1.6.3",
+    "mongoose": "^7.6.2",
+    "morgan": "~1.9.1",
+    "request-ip": "^3.3.0",
+    "socket.io": "^4.7.2",
+    "telegraf": "^4.14.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

